@@ -62,12 +62,41 @@ scoary -g gene_presence_absence.csv -t traits.csv -c BH --no_pairwise
 Pyseer was used for K-mer-based analysis and the tutorial can be accessed in (https://pyseer.readthedocs.io/en/master/tutorial.html#k-mer-association-with-mixed-effects-model)
 
 ## Phylogenetic analysis ##
+All public A. junii sequence was deposited in genome_fna directory.
 core genome alignment was generated using snippy (https://github.com/tseemann/snippy), and recombination sites were removed with Gubbins (https://github.com/nickjcroucher/gubbins). A maximum-likelihood phylogenetic tree was then constructed using IQ-TREE (http://www.iqtree.org/) based on clean core genome SNP alignments.
 ```
-snippy --outdir mut1 --ref ref.gbk --ctgs mut1.fasta
+snippy --outdir mut1 --ref ref.gbk --ctgs fna/seq1.fasta
 run_gubbins.py -p gubbins clean.full.aln
 snp-sites -c gubbins.filtered_polymorphic_sites.fasta > clean.core.aln
 iqtree -s clean.core.aln --boot-trees --wbtl -m GTR+I+G -B 1000 -nt 18
+```
+## Plasmid analysis ##
+All public plasmid sequence was deposited in plasmid_fna directory
+Plasmid sequence distances are calculated using Mash (https://github.com/marbl/Mash).
+```
+mash triangle -E -s 5000 -k 13 /path/to/fasta.fa > /path/to/edgelist.tsv
+```
+
+The community detection was generated based on similarity using the Louvain algorithm (https://github.com/taynaud/python-louvain)
+```
+usage: louvain_community.py [-h] -i INPUT -o OUTPUT [--resolution RESOLUTION]
+
+Calculate Louvain communities from Mash distance results.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -i INPUT, --input INPUT
+                        Input Mash distance results file (tab-delimited).
+  -o OUTPUT, --output OUTPUT
+                        Output file for Louvain community results.
+  --resolution RESOLUTION
+                        Resolution parameter for Louvain algorithm (default:
+                        1.0)
+```
+Acinetobacter plasmid typing was based on three replicons families: Rep_3 (PF01051), replicase (PF03090), Rep_1 (PF01446), and RepC (PF06504).
+```
+hmmscan --tblout /replicon/ourput.tbl -E 1e-5 Database/00.PfamDB/pfam.hmm seq.faa
+```
 
 ## Transcriptome analysis ##
 
