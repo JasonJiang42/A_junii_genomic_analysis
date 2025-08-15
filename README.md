@@ -23,3 +23,20 @@ tar -xvf data ./card.json
 rgi load --card_json /path/to/card.json --local
 rgi main --input_sequence nucleotide_input.fasta --output_file output_file --local --clean
 ```
+
+CPS region prediction using Kaptive (https://github.com/klebgenomics/Kaptive)
+```
+kaptive assembly database assemblies/*.fasta -o kaptive_results.tsv -f
+```
+
+Pangenome analysis using prokka (https://github.com/tseemann/prokka) and roary (https://sanger-pathogens.github.io/Roary/)  
+```
+prokka /path/to/"$sample".fasta --quiet --outdir /path/to/prokka_output/"$sample" --force --prefix $sample
+roary –f output_dir *.gff
+```
+
+Secretion systems annotation by MacSyFinder
+
+```
+macsyfinder --db-type ordered_replicon --sequence-db seqence.faa --models TXSScan -o txss/outdir -w 8
+```
