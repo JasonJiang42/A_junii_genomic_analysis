@@ -13,4 +13,13 @@ High-quality reads were assembled using SPAdes (https://github.com/ablab/spades)
 python spades.py --pe1-1 file1 --pe1-2 file2 -o assmebly --careful -k 21,33,55,77,99,127
 ```
 
+## Genome annotation ##   
+Virulence factors (VFs) identification using core setA VF data ```VFDB_setA_pro.fas``` by abriate (https://github.com/tseemann/abricate)  
 
+Antibiotic resistance genes (ARGs) identification using RGI (https://github.com/arpcard/rgi?tab=readme-ov-file)
+```
+wget https://card.mcmaster.ca/latest/data
+tar -xvf data ./card.json
+rgi load --card_json /path/to/card.json --local
+rgi main --input_sequence nucleotide_input.fasta --output_file output_file --local --clean
+```
