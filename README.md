@@ -8,3 +8,5 @@ python spades.py --pe1-1 file1 --pe1-2 file2 -o assmebly --careful -k 21,33,55,7
 ```
 Species confirmation by GTDB-Tk (https://github.com/Ecogenomics/GTDBTk)  
 ```
+gtdbtk classify_wf --genome_dir genomes --out_dir gtdbtk/classify --cpus 10 --skip_ani_screen
+```
